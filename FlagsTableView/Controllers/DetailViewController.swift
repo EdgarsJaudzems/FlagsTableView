@@ -10,22 +10,21 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet var imageLabel: UIImageView!
-    @IBOutlet var textLabelDetail: UILabel!
     
     var imageString: String?
     var textLabelString: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        title = textLabelString?.uppercased()
+        
         if let imageToLoad = imageString {
             imageLabel.image = UIImage(named: imageToLoad)
         }
-        imageLabel.layer.borderWidth = 1
-        imageLabel.layer.borderColor = UIColor.lightGray.cgColor
         
-        textLabelDetail.text = textLabelString?.uppercased()
-        
+        roundedFlags()
+   
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
         navigationItem.rightBarButtonItem?.tintColor = .black
         navigationController?.navigationBar.tintColor = .black
@@ -36,15 +35,17 @@ class DetailViewController: UIViewController {
             print("No image found")
             return
         }
-        
-        guard let countryName = textLabelDetail else {
-            print("No country name found")
-            return
-        }
 
-        let vc = UIActivityViewController(activityItems: [image, countryName], applicationActivities: [])
+        let vc = UIActivityViewController(activityItems: [image, title ?? "No title found"], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
+    }
+    
+    func roundedFlags() {
+        imageLabel.layer.borderWidth = 1
+        imageLabel.layer.borderColor = UIColor.lightGray.cgColor
+        imageLabel.layer.cornerRadius = 20
+        imageLabel.clipsToBounds = true
     }
 
 

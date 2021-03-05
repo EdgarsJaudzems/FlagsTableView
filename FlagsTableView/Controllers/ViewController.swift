@@ -15,12 +15,11 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         title = "Countries"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        
         flags += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         flags.shuffle()
-        
     }
-    
+        
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
@@ -38,10 +37,14 @@ class ViewController: UITableViewController {
             cell.textLabel?.text = flags[indexPath.row].capitalized
         }
         
-        
         cell.imageView!.image = UIImage(named: flags[indexPath.row])
         cell.imageView!.layer.borderWidth = 0.5
         cell.imageView!.layer.borderColor = UIColor.lightGray.cgColor
+        cell.imageView!.layer.cornerRadius = 20
+        cell.imageView!.clipsToBounds = true
+
+//        cell.layer.borderColor = UIColor.white.cgColor
+//        cell.layer.borderWidth = 3
         return cell
     }
     
